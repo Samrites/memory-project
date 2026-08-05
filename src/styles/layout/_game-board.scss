@@ -1,0 +1,23 @@
+.game-board {
+  display: grid;
+  gap: clamp(6px, 0.85vw, 11px);
+  margin: 0 auto;
+  padding: clamp(8px, 1.2vw, 14px);
+  border-radius: 20px;
+  background: var(--board-background);
+
+  &--16 {
+    grid-template-columns: repeat(4, 1fr);
+    width: min(540px, 100%);
+  }
+
+  &--24 {
+    grid-template-columns: repeat(6, 1fr);
+    width: min(720px, 100%);
+  }
+
+  &--36 {
+    grid-template-columns: repeat(6, 1fr);
+    width: min(720px, 100%);
+  }
+}

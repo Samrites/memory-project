@@ -1,0 +1,22 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.72);
+  z-index: 10;
+
+  &.is-hidden { display: none; }
+}
+
+.modal {
+  width: min(440px, 100%);
+  padding: 32px;
+  border-radius: 24px;
+  color: #26313e;
+  background: #ffffff;
+  text-align: center;
+
+  &__actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+}

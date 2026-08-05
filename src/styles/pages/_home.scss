@@ -1,0 +1,63 @@
+@use '../abstract/mixins' as mixins;
+
+.home-screen {
+  position: relative;
+  @include mixins.flex-center;
+  min-height: 100vh;
+  padding: 40px;
+  color: #ffffff;
+  background: #303946;
+  overflow: hidden;
+
+  &__content {
+    display: grid;
+    justify-items: start;
+    width: min(100%, 680px);
+  }
+
+
+  &__logo {
+    width: min(220px, 42vw);
+    height: auto;
+    margin-bottom: 18px;
+    object-fit: contain;
+  }
+
+  &__eyebrow {
+    margin: 0 0 10px;
+    font-size: clamp(1rem, 1.4vw, 1.3rem);
+    font-weight: 700;
+  }
+
+  &__title {
+    margin: 0 0 38px;
+    font-size: clamp(3rem, 5.5vw, 5rem);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+  }
+
+  &__controller {
+    position: absolute;
+    left: 5vw;
+    bottom: 3vh;
+    font-size: clamp(6rem, 12vw, 10rem);
+    opacity: 0.12;
+    filter: grayscale(1);
+    animation: controller-float 2.8s ease-in-out infinite;
+  }
+}
+
+@keyframes controller-float {
+  50% { transform: translateY(-8px) rotate(-3deg); }
+}
+
+@media (max-width: 700px) {
+  .home-screen {
+    padding: 28px;
+
+    &__content {
+      justify-items: center;
+      text-align: center;
+    }
+  }
+}
