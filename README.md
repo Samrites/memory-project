@@ -1,32 +1,27 @@
 # Memory Game
 
-A browser-based two-player memory game built with TypeScript, SCSS and Vite. Players choose a starting color, a board size and one of two visual themes. Matching pairs score a point and the player with the highest score wins.
+A two-player browser Memory game built with TypeScript, SCSS and Vite. Players choose a starting player, a board size and one of two visual themes. Matching pairs score one point; the player with the highest score wins.
 
 ## Features
 
-- Figma-inspired home and settings screens
-- Two themes: Code Vibes and Foods
-- Two players: Blue and Orange
-- Three board sizes: 16, 24 and 36 cards
-- Animated card flips
+- Figma-based landing and settings screens
+- Code Vibes and Foods themes
+- Blue and Orange players
+- 16, 24 and 36-card boards
+- Animated 3D card flips
 - Current-player indicator and live score
-- Exit-game confirmation dialog
+- Exit confirmation that returns to Settings
 - Separate final-score and winner/draw screens
-- TypeScript `MemoryCard` class
+- `MemoryCard` TypeScript class
 
-## Installation
+## Run locally
 
 ```bash
 npm install
-```
-
-## Development
-
-```bash
 npm run dev
 ```
 
-Open the local URL shown by Vite, usually `http://localhost:5173/`.
+Open the local address printed by Vite, usually `http://localhost:5173/`.
 
 ## Production build
 
@@ -34,4 +29,4 @@ Open the local URL shown by Vite, usually `http://localhost:5173/`.
 npm run build
 ```
 
-The production-ready files are generated inside the `dist` folder. Upload the contents of `dist` to the FTP server.
+Upload the contents of `dist` to the FTP server. The Vite configuration uses relative paths, so the build can run inside a subfolder.
