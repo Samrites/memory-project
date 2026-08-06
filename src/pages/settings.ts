@@ -1,12 +1,46 @@
-import type { BoardSize, PlayerColor, ThemeOption } from '../models/game-settings';
+import type { BoardSize, ThemeOption } from '../models/game-settings';
 
-function option(name: string, value: string, label: string): string {
+interface ChoiceOption {
+  label: string;
+  name: string;
+  value: string;
+}
+
+const THEME_OPTIONS: ChoiceOption[] = [
+  { label: 'Code vibes theme', name: 'theme', value: 'code' },
+  { label: 'Foods theme', name: 'theme', value: 'food' },
+];
+
+const PLAYER_OPTIONS: ChoiceOption[] = [
+  { label: 'Blue', name: 'player', value: 'blue' },
+  { label: 'Orange', name: 'player', value: 'orange' },
+];
+
+const BOARD_OPTIONS: ChoiceOption[] = [
+  { label: '16 cards', name: 'board-size', value: '16' },
+  { label: '24 cards', name: 'board-size', value: '24' },
+  { label: '36 cards', name: 'board-size', value: '36' },
+];
+
+function renderOption(option: ChoiceOption): string {
+  const previewAttribute = option.name === 'theme'
+    ? `data-theme-preview="${option.value}"`
+    : '';
+
   return `
-    <label class="choice" data-theme-preview="${name === 'theme' ? value : ''}">
-      <input type="radio" name="${name}" value="${value}">
-      <span>${label}</span>
+    <label class="choice" ${previewAttribute}>
+      <input type="radio" name="${option.name}" value="${option.value}">
+      <span class="choice__label">${option.label}</span>
     </label>
   `;
+}
+
+function renderOptions(options: ChoiceOption[]): string {
+  return options.map(renderOption).join('');
+}
+
+function renderIcon(path: string): string {
+  return `<img class="settings-group__icon" src="${path}" alt="" aria-hidden="true">`;
 }
 
 export function renderSettings(): string {
@@ -19,54 +53,40 @@ export function renderSettings(): string {
 
         <div class="settings-screen__layout">
           <form class="settings-form" id="settings-form">
-            <fieldset class="settings-group settings-group--theme">
-              <legend>🎨 Game themes</legend>
-              <div class="choice-list">
-                ${option('theme', 'code', 'Code vibes theme')}
-                ${option('theme', 'food', 'Foods theme')}
-              </div>
+            <fieldset class="settings-group">
+              <legend>${renderIcon('./img/icons/game-theme.svg')}<span>Game themes</span></legend>
+              <div class="choice-list">${renderOptions(THEME_OPTIONS)}</div>
             </fieldset>
 
-            <fieldset class="settings-group settings-group--player">
-              <legend>♟ Choose player</legend>
-              <div class="choice-list">
-                ${option('player', 'blue', 'Blue')}
-                ${option('player', 'orange', 'Orange')}
-              </div>
+            <fieldset class="settings-group">
+              <legend>${renderIcon('./img/icons/player.svg')}<span>Choose player</span></legend>
+              <div class="choice-list">${renderOptions(PLAYER_OPTIONS)}</div>
             </fieldset>
 
-            <fieldset class="settings-group settings-group--size">
-              <legend>▱ Board size</legend>
-              <div class="choice-list">
-                ${option('board-size', '16', '16 cards')}
-                ${option('board-size', '24', '24 cards')}
-                ${option('board-size', '36', '36 cards')}
-              </div>
+            <fieldset class="settings-group">
+              <legend>${renderIcon('./img/icons/board-size.svg')}<span>Board size</span></legend>
+              <div class="choice-list">${renderOptions(BOARD_OPTIONS)}</div>
             </fieldset>
           </form>
 
-          <div class="settings-preview-column">
-            <figure class="theme-preview" aria-live="polite">
-              <div class="theme-preview__placeholder" id="theme-preview-placeholder">
-                Choose a theme to see the preview
-              </div>
-              <img
-                class="theme-preview__image is-hidden"
-                id="theme-preview-image"
-                src=""
-                alt=""
-              >
+          <section class="settings-preview-column" aria-label="Theme preview and selected settings">
+            <figure class="theme-preview" id="theme-preview" data-preview-theme="code" aria-live="polite">
+              <img class="theme-preview__image" id="theme-preview-image" src="./img/previews/code-preview.png" alt="Preview of the Code Vibes theme">
             </figure>
 
             <div class="settings-actions">
-              <div class="settings-steps" aria-hidden="true">
-                <span>Game theme</span><i></i><span>Player</span><i></i><span>Board size</span>
+              <div class="settings-summary" aria-live="polite">
+                <span id="summary-theme">Game theme</span>
+                <i aria-hidden="true"></i>
+                <span id="summary-player">Player</span>
+                <i aria-hidden="true"></i>
+                <span id="summary-board">Board size</span>
               </div>
-              <button class="settings-form__start primary-button" id="settings-start-button" form="settings-form" type="submit" disabled>
-                ▣ Start
+              <button class="settings-form__start" id="settings-start-button" form="settings-form" type="submit" disabled>
+                <span aria-hidden="true">▣</span><span>Start</span>
               </button>
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </section>
@@ -74,12 +94,18 @@ export function renderSettings(): string {
 }
 
 export function readChoice<T extends string>(name: string): T | null {
-  return document.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value as T | null;
+  const selected = document.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`);
+  return selected ? selected.value as T : null;
 }
 
 export function readBoardSize(): BoardSize | null {
-  const value = readChoice<string>('board-size');
-  return value ? Number(value) as BoardSize : null;
+  const selectedValue = readChoice<string>('board-size');
+  if (!selectedValue) return null;
+
+  const boardSize = Number(selectedValue);
+  return boardSize === 16 || boardSize === 24 || boardSize === 36 ? boardSize : null;
 }
 
-export type SettingsChoice = PlayerColor | ThemeOption;
+export function getSelectedTheme(): ThemeOption | null {
+  return readChoice<ThemeOption>('theme');
+}
