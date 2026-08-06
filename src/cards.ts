@@ -19,8 +19,8 @@ const FOOD_NAMES = [
 
 function createAssets(theme: ThemeOption, names: readonly string[]): CardAsset[] {
   return names.map((name) => ({
-    imagePath: `/img/${theme}/${name}.png`,
-    label: name.replace('-', ' '),
+    imagePath: `./img/${theme}/${name}.png`,
+    label: name.replaceAll('-', ' '),
   }));
 }
 

@@ -43,7 +43,7 @@ function showHome(): void {
 }
 
 function showSettings(): void {
-  document.body.dataset.theme = 'food';
+  document.body.dataset.theme = 'settings';
   setApp(renderSettings());
   bindSettingsEvents();
 }
@@ -53,34 +53,44 @@ function bindSettingsEvents(): void {
   form?.addEventListener('submit', startGame);
   form?.addEventListener('change', updateSettingsState);
 
-  document.querySelectorAll<HTMLElement>('[data-theme-preview]').forEach((choice) => {
-    const theme = choice.dataset.themePreview as ThemeOption | undefined;
-    if (!theme) return;
-    choice.addEventListener('mouseenter', () => showThemePreview(theme));
-    choice.addEventListener('focusin', () => showThemePreview(theme));
-  });
 }
 
 function showThemePreview(theme: ThemeOption): void {
   const preview = THEME_PREVIEWS[theme];
   const image = document.querySelector<HTMLImageElement>('#theme-preview-image');
-  const placeholder = document.querySelector<HTMLElement>('#theme-preview-placeholder');
-  if (!preview || !image || !placeholder) return;
+  if (!preview || !image) return;
   image.src = preview.src;
   image.alt = preview.alt;
-  image.classList.remove('is-hidden');
-  placeholder.classList.add('is-hidden');
+  const frame = document.querySelector<HTMLElement>('#theme-preview');
+  if (frame) frame.dataset.previewTheme = theme;
 }
 
 function updateSettingsState(event: Event): void {
   const input = event.target as HTMLInputElement;
   if (input.name === 'theme') {
-    const theme = input.value as ThemeOption;
-    showThemePreview(theme);
-    document.body.dataset.theme = theme;
+    showThemePreview(input.value as ThemeOption);
   }
+
+  updateSettingsSummary();
   const startButton = document.querySelector<HTMLButtonElement>('#settings-start-button');
   if (startButton) startButton.disabled = readSettings() === null;
+}
+
+function setSummaryText(selector: string, value: string): void {
+  const element = document.querySelector<HTMLElement>(selector);
+  if (element) element.textContent = value;
+}
+
+function updateSettingsSummary(): void {
+  const theme = readChoice<ThemeOption>('theme');
+  const player = readChoice<PlayerColor>('player');
+  const boardSize = readBoardSize();
+  const themeLabel = theme === 'code' ? 'Code vibes theme' : theme === 'food' ? 'Foods theme' : 'Game theme';
+  const playerLabel = player ? `${player[0].toUpperCase()}${player.slice(1)} Player` : 'Player';
+  const boardLabel = boardSize ? `Board-${boardSize} Cards` : 'Board size';
+  setSummaryText('#summary-theme', themeLabel);
+  setSummaryText('#summary-player', playerLabel);
+  setSummaryText('#summary-board', boardLabel);
 }
 
 function readSettings(): GameSettings | null {
