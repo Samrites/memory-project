@@ -1,0 +1,80 @@
+<!-- Reusable settings fragments -->
+<template id="settings-group">
+  <section class="settings-group">
+    <h2 class="settings-group__title">
+      <img src="{{GROUP_ICON_SRC}}" alt="" aria-hidden="true" />
+      <span>{{GROUP_TITLE}}</span>
+    </h2>
+    <ul class="settings-group__options">{{OPTIONS_MARKUP}}</ul>
+  </section>
+</template>
+
+<template id="settings-option-button">
+  <li class="settings-option-item">
+    <button
+      class="settings-option{{SELECTED_CLASS}}"
+      type="button"
+      data-group="{{OPTION_GROUP}}"
+      data-value="{{OPTION_VALUE}}"{{PREVIEW_THEME_ATTRIBUTE}}
+    >
+      <img
+        class="settings-option__marker"
+        src="{{MARKER_ICON_SRC}}"
+        data-active-icon="{{MARKER_ACTIVE_ICON_SRC}}"
+        data-inactive-icon="{{MARKER_INACTIVE_ICON_SRC}}"
+        alt=""
+        aria-hidden="true"
+      />
+      <span class="settings-option__label">{{OPTION_LABEL}}</span>
+      <img
+        class="settings-option__line{{VISIBLE_LINE_CLASS}}"
+        src="{{SELECTED_LINE_ICON_SRC}}"
+        alt=""
+        aria-hidden="true"
+      />
+    </button>
+  </li>
+</template>
+
+<template id="settings-footer-summary">
+  <div class="settings-footer__summary" aria-live="polite">
+    <div class="settings-footer__fields">
+      {{FOOTER_FIELDS_MARKUP}}
+    </div>
+    {{START_BUTTON_MARKUP}}
+  </div>
+</template>
+
+<template id="settings-footer-item">
+  <div class="settings-footer__item{{SELECTED_CLASS}}" data-summary-group="{{SUMMARY_GROUP}}">
+    <span class="settings-footer__text" data-summary-text="{{SUMMARY_GROUP}}">{{SUMMARY_TEXT}}</span>
+    {{SEPARATOR_MARKUP}}
+  </div>
+</template>
+
+<template id="settings-footer-separator">
+  <img
+    class="settings-footer__separator"
+    src="{{SEPARATOR_LINE_SRC}}"
+    data-separator-inactive="{{SEPARATOR_LINE_SRC}}"
+    data-separator-active="{{SEPARATOR_ACTIVE_SRC}}"
+    alt=""
+    aria-hidden="true"
+  />
+</template>
+
+<template id="settings-start-button">
+  <button
+    id="start-game-button"
+    class="settings-start-button{{READY_CLASS}}"
+    type="button"
+    aria-label="Start game"{{DISABLED_ATTRIBUTE}}
+  >
+    <img
+      class="settings-start-button__image"
+      src="{{START_BUTTON_IMAGE_SRC}}"
+      alt=""
+      aria-hidden="true"
+    />
+  </button>
+</template>

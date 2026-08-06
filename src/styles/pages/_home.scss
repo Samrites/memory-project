@@ -1,40 +1,25 @@
-@use '../abstract/mixins' as mixins;
-
-.home-screen {
-  @include mixins.flex-center;
-  min-height: 100vh;
-  padding: 40px;
-  color: #ffffff;
-  background: #303946;
-  overflow: hidden;
-
-  &__content {
-    display: grid;
-    justify-items: start;
-    width: min(100%, 680px);
-  }
-
-  &__eyebrow {
-    margin: 0 0 10px;
-    font-size: 18px;
-    font-weight: 700;
-  }
-
-  &__title {
-    margin: 0 0 38px;
-    font-size: clamp(56px, 5.5vw, 78px);
-    line-height: 0.98;
-    letter-spacing: -0.04em;
-  }
+.home-screen__eyebrow {
+  margin: 0;
+  font-family: 'Almarai', sans-serif;
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: 0;
 }
 
-@media (max-width: 700px) {
-  .home-screen {
-    padding: 28px;
+.home-screen__title {
+  margin: 18px 0 0;
+  font-family: 'Red Rose', serif;
+  font-size: clamp(58px, 10vw, 140px);
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: 0;
+}
 
-    &__content {
-      justify-items: center;
-      text-align: center;
-    }
+@media (max-width: 900px) {
+  .home-screen__title {
+    margin-top: 10px;
   }
 }

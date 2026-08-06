@@ -1,0 +1,25 @@
+<main class="settings-screen" aria-labelledby="settings-title">
+  <div class="settings-screen__canvas">
+    <section class="settings-panel">
+      <h1 id="settings-title" class="settings-panel__title">Settings</h1>
+      {{THEME_GROUP_MARKUP}}
+      {{PLAYER_GROUP_MARKUP}}
+      {{BOARD_SIZE_GROUP_MARKUP}}
+    </section>
+
+    <aside class="settings-preview">
+      <img
+        class="settings-preview__image"
+        src="{{PREVIEW_IMAGE_SRC}}"
+        data-preview-default="{{PREVIEW_DEFAULT_SRC}}"
+        data-preview-code-vibes="{{PREVIEW_CODE_VIBES_SRC}}"
+        data-preview-foods="{{PREVIEW_FOODS_SRC}}"
+        alt="Game preview"
+      />
+    </aside>
+
+    <section class="settings-footer">
+      {{FOOTER_SUMMARY_MARKUP}}
+    </section>
+  </div>
+</main>

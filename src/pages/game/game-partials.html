@@ -1,0 +1,209 @@
+<!-- Reusable game fragments -->
+<template id="game-hud-code-vibes">
+  <div class="game-screen__hud">
+    <div class="game-screen__scoreboard" aria-label="Scoreboard">
+      <span class="game-screen__score game-screen__score--blue">
+        <span class="game-screen__score-icon" aria-hidden="true">{{PLAYER_LABEL_ICON}}</span>
+        <span>Blue</span>
+        <span class="game-screen__score-value" data-score-player="blue">0</span>
+      </span>
+      <span class="game-screen__score game-screen__score--orange">
+        <span class="game-screen__score-icon" aria-hidden="true">{{PLAYER_LABEL_ICON}}</span>
+        <span>Orange</span>
+        <span class="game-screen__score-value" data-score-player="orange">0</span>
+      </span>
+    </div>
+
+    <div class="game-screen__current-player" aria-label="Current player">
+      <span class="game-screen__current-player-text">Current player:</span>
+      <span
+        class="game-screen__current-player-marker{{PLAYER_MARKER_CLASS_NAME}}"
+        data-current-player-marker
+        aria-hidden="true"
+      >
+        {{PLAYER_LABEL_ICON}}
+      </span>
+    </div>
+
+    <button
+      id="game-exit-button"
+      class="game-screen__exit-button"
+      type="button"
+      aria-label="Exit game"
+    >
+      <img
+        class="game-screen__exit-button-image"
+        src="{{EXIT_BUTTON_SRC}}"
+        alt=""
+        aria-hidden="true"
+      />
+    </button>
+  </div>
+</template>
+
+<template id="game-hud-foods">
+  <div class="game-screen__hud game-screen__hud--foods">
+    <div class="game-screen__foods-topbar">
+      <div class="game-screen__scoreboard" aria-label="Scoreboard">
+        <span class="game-screen__score game-screen__score--orange">
+          <span class="game-screen__score-icon" aria-hidden="true">{{FOODS_SCORE_ICON}}</span>
+          <span class="game-screen__score-value" data-score-player="orange">0</span>
+        </span>
+        <span class="game-screen__score game-screen__score--blue">
+          <span class="game-screen__score-icon" aria-hidden="true">{{FOODS_SCORE_ICON}}</span>
+          <span class="game-screen__score-value" data-score-player="blue">0</span>
+        </span>
+      </div>
+
+      <div class="game-screen__current-player" aria-label="Current player">
+        <span class="game-screen__current-player-text">Current player:</span>
+        <span
+          class="game-screen__current-player-marker{{PLAYER_MARKER_CLASS_NAME}}"
+          data-current-player-marker
+          aria-hidden="true"
+        >
+          {{FOODS_PLAYER_MARKER_ICON}}
+        </span>
+      </div>
+
+      <button
+        id="game-exit-button"
+        class="game-screen__exit-button game-screen__exit-button--foods"
+        type="button"
+        aria-label="Exit game"
+      >
+        <img
+          class="game-screen__exit-button-image game-screen__exit-button-image--foods game-screen__exit-button-image--foods-default"
+          src="{{FOODS_EXIT_HEADER_BUTTON_SRC}}"
+          alt=""
+          aria-hidden="true"
+        />
+        <img
+          class="game-screen__exit-button-image game-screen__exit-button-image--foods game-screen__exit-button-image--foods-hover"
+          src="{{FOODS_EXIT_HEADER_BUTTON_HOVER_SRC}}"
+          alt=""
+          aria-hidden="true"
+        />
+      </button>
+    </div>
+  </div>
+</template>
+
+<template id="game-exit-modal-code-vibes">
+  <div class="game-screen__exit-modal" data-exit-modal hidden>
+    <div class="game-screen__exit-modal-panel" role="dialog" aria-modal="true" aria-labelledby="exit-modal-title">
+      <h2 id="exit-modal-title" class="game-screen__exit-modal-title">
+        Are you sure you want to quit the game?
+      </h2>
+
+      <div class="game-screen__exit-modal-actions">
+        <button
+          type="button"
+          class="game-screen__modal-button game-screen__modal-button--back"
+          data-exit-cancel
+          aria-label="Back to game"
+        >
+          <img
+            class="game-screen__modal-button-image"
+            src="{{BACK_TO_GAME_BUTTON_SRC}}"
+            alt=""
+            aria-hidden="true"
+          />
+        </button>
+
+        <button
+          type="button"
+          class="game-screen__modal-button game-screen__modal-button--exit"
+          data-exit-confirm
+          aria-label="Exit game"
+        >
+          <img
+            class="game-screen__modal-button-image"
+            src="{{EXIT_GAME_BUTTON_SRC}}"
+            alt=""
+            aria-hidden="true"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="game-exit-modal-foods">
+  <div class="game-screen__exit-modal game-screen__exit-modal--foods" data-exit-modal hidden>
+    <div
+      class="game-screen__exit-modal-panel game-screen__exit-modal-panel--foods"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="exit-modal-title"
+    >
+      <h2 id="exit-modal-title" class="game-screen__exit-modal-title game-screen__exit-modal-title--foods">
+        Are you sure you want to quit the game?
+      </h2>
+
+      <div class="game-screen__exit-modal-actions game-screen__exit-modal-actions--foods">
+        <button
+          type="button"
+          class="game-screen__modal-button game-screen__modal-button--foods game-screen__modal-button--back"
+          data-exit-cancel
+          aria-label="Back to game"
+        >
+          <img
+            class="game-screen__modal-button-image game-screen__modal-button-image--foods game-screen__modal-button-image--foods-back game-screen__modal-button-image--foods-default"
+            src="{{FOODS_BACK_TO_GAME_BUTTON_SRC}}"
+            alt=""
+            aria-hidden="true"
+          />
+          <img
+            class="game-screen__modal-button-image game-screen__modal-button-image--foods game-screen__modal-button-image--foods-back game-screen__modal-button-image--foods-hover"
+            src="{{FOODS_BACK_TO_GAME_BUTTON_HOVER_SRC}}"
+            alt=""
+            aria-hidden="true"
+          />
+        </button>
+
+        <button
+          type="button"
+          class="game-screen__modal-button game-screen__modal-button--foods game-screen__modal-button--exit"
+          data-exit-confirm
+          aria-label="Exit game"
+        >
+          <img
+            class="game-screen__modal-button-image game-screen__modal-button-image--foods game-screen__modal-button-image--foods-exit game-screen__modal-button-image--foods-default"
+            src="{{FOODS_EXIT_OVERLAY_BUTTON_SRC}}"
+            alt=""
+            aria-hidden="true"
+          />
+          <img
+            class="game-screen__modal-button-image game-screen__modal-button-image--foods game-screen__modal-button-image--foods-exit game-screen__modal-button-image--foods-hover"
+            src="{{FOODS_EXIT_OVERLAY_BUTTON_HOVER_SRC}}"
+            alt=""
+            aria-hidden="true"
+          />
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="game-card">
+  <button
+    class="game-card"
+    type="button"
+    data-card-index="{{CARD_INDEX}}"
+    data-card-icon="{{CARD_ICON}}"
+  >
+    <span class="game-card__inner">
+      <span
+        class="game-card__face game-card__face--front"
+        style="background-image: url('{{BACK_CARD_SPRITE}}')"
+        aria-hidden="true"
+      ></span>
+      <span
+        class="game-card__face game-card__face--back"
+        style="background-image: url('{{CARD_ICON}}')"
+        aria-hidden="true"
+      ></span>
+    </span>
+  </button>
+</template>

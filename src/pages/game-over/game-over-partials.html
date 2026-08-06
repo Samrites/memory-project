@@ -1,0 +1,66 @@
+<!-- Reusable game-over fragments -->
+<template id="game-over-confetti">
+  <img
+    class="game-over-screen__confetti"
+    src="{{CONFETTI_SRC}}"
+    alt=""
+    aria-hidden="true"
+  />
+</template>
+
+<template id="game-over-winner-code-vibes">
+  {{WINNER_PREFIX_MARKUP}}
+  <p class="game-over-screen__winner-player {{WINNER_PLAYER_CLASS_NAME}}">
+    {{WINNER_LABEL}}
+  </p>
+
+  <h2 class="game-over-screen__subtitle">Final score</h2>
+  {{SCORE_SUMMARY_MARKUP}}
+</template>
+
+<template id="game-over-winner-foods">
+  {{WINNER_PREFIX_MARKUP}}
+  <p class="game-over-screen__winner-player {{WINNER_PLAYER_CLASS_NAME}}">
+    {{WINNER_LABEL}}
+  </p>
+  {{PLAYER_ICON_MARKUP}}
+</template>
+
+<template id="game-over-winner-player-icon-foods">
+  <div class="game-over-screen__winner-icon">
+    <img
+      class="game-over-screen__winner-icon-image"
+      src="{{WINNER_ICON_SRC}}"
+      alt="{{WINNER_ICON_ALT}}"
+    />
+  </div>
+</template>
+
+<template id="game-over-summary-foods">
+  <div class="game-over-screen__summary game-over-screen__summary--foods" aria-label="Final score">
+    {{FOODS_ORANGE_SCORE_ROW}}
+    {{FOODS_BLUE_SCORE_ROW}}
+  </div>
+</template>
+
+<template id="game-over-summary-code-vibes">
+  <div class="game-over-screen__summary" aria-label="Final score">
+    {{CODE_VIBES_BLUE_SCORE_ROW}}
+    {{CODE_VIBES_ORANGE_SCORE_ROW}}
+  </div>
+</template>
+
+<template id="game-over-summary-foods-row">
+  <div class="game-over-screen__foods-score game-over-screen__foods-score--{{PLAYER_COLOR}}">
+    <span class="game-over-screen__icon" aria-hidden="true">{{PLAYER_LABEL_ICON}}</span>
+    <span class="game-over-screen__value">{{PLAYER_SCORE}}</span>
+  </div>
+</template>
+
+<template id="game-over-summary-code-vibes-row">
+  <div class="game-over-screen__player game-over-screen__player--{{PLAYER_COLOR}}">
+    <span class="game-over-screen__icon" aria-hidden="true">{{PLAYER_LABEL_ICON}}</span>
+    <span class="game-over-screen__name">{{PLAYER_NAME}}</span>
+    <span class="game-over-screen__value">{{PLAYER_SCORE}}</span>
+  </div>
+</template>

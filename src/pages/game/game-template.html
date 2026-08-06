@@ -1,0 +1,16 @@
+<main class="game-screen {{GAME_THEME_CLASS_NAME}} {{BOARD_SIZE_CLASS_NAME}}" aria-labelledby="game-title">
+  <h1 id="game-title" class="game-screen__sr-only">Game</h1>
+  <div class="game-screen__canvas">
+    <section class="game-screen__board-area" aria-label="Game board">
+      <div
+        class="game-screen__board-grid"
+        id="game-board"
+        data-board-size="{{BOARD_SIZE}}"
+      >
+        {{BOARD_CARDS}}
+      </div>
+    </section>
+    {{HUD_MARKUP}}
+    {{EXIT_MODAL_MARKUP}}
+  </div>
+</main>

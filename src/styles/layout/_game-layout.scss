@@ -1,0 +1,1038 @@
+.game-screen {
+  --game-score-top: calc(100% * 41 / 1024);
+  --game-score-left: calc(100% * 112 / 1440);
+  --game-score-width: calc(100% * 292 / 1440);
+  --game-score-height: calc(100% * 62 / 1024);
+  --game-exit-top: calc(100% * 41.5 / 1024);
+  --game-label-top: calc(100% * 75 / 1024);
+  --game-exit-left: calc(100% * 1122.5 / 1440);
+  --game-label-left: calc(100% * 772.974 / 1440);
+  --game-board-top: calc(100% * 255 / 1024);
+  --game-board-width: calc(100% * 542 / 1440);
+  --game-board-gap: calc(100% * 12 / 1440);
+  --game-board-columns: 4;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--home-bg);
+}
+
+.game-screen--board-24 {
+  --game-score-top: calc(100% * 38 / 1024);
+  --game-exit-top: calc(100% * 38.5 / 1024);
+  --game-label-top: calc(100% * 72 / 1024);
+  --game-board-top: calc(100% * 255 / 1024);
+  --game-board-width: calc(100% * 812 / 1440);
+  --game-board-columns: 6;
+}
+
+.game-screen--board-36 {
+  --game-score-top: calc(100% * 10 / 1024);
+  --game-exit-top: calc(100% * 10.5 / 1024);
+  --game-label-top: calc(100% * 44 / 1024);
+  --game-board-top: calc(100% * 145 / 1024);
+  --game-board-width: calc(100% * 812 / 1440);
+  --game-board-columns: 6;
+}
+
+.game-screen__canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.game-screen__board-area {
+  position: absolute;
+  top: var(--game-board-top);
+  left: 50%;
+  width: var(--game-board-width);
+  transform: translateX(-50%);
+}
+
+.game-screen__board-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--game-board-columns), minmax(0, 1fr));
+  gap: var(--game-board-gap);
+}
+
+.game-card {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  perspective: 800px;
+}
+
+.game-card:focus-visible {
+  outline: 2px solid #f0e5d9;
+  outline-offset: 2px;
+}
+
+.game-card__inner {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease-in-out;
+}
+
+.game-card__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+
+.game-card__face--front {
+  overflow: hidden;
+  background-color: #2f8d7b;
+  background-image: linear-gradient(136deg, #4dd5bc 19%, #2f8d7b 100%);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.game-card__face--back {
+  transform: rotateY(180deg);
+  background-color: #e8f3f0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.game-card.flipped .game-card__inner {
+  transform: rotateY(180deg);
+}
+
+.game-card.is-matched {
+  cursor: default;
+}
+
+.game-card.is-matched .game-card__face--back {
+  box-shadow: inset 0 0 0 2px rgba(240, 234, 110, 0.7);
+}
+
+.game-screen__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.game-screen__hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.game-screen__scoreboard {
+  position: absolute;
+  top: var(--game-score-top);
+  left: var(--game-score-left);
+  width: var(--game-score-width);
+  height: var(--game-score-height);
+  display: flex;
+  align-items: center;
+  gap: calc(100% * 10 / 292);
+  padding: 0 calc(100% * 14 / 292);
+  background-color: #3f5958;
+  font-family: 'Almarai', sans-serif;
+  font-size: clamp(14px, 1.15vw, 22px);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.game-screen__score {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.26em;
+  white-space: nowrap;
+}
+
+.game-screen__score-icon {
+  width: 0.88em;
+  height: 0.7em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.game-screen__score-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.game-screen__score--blue {
+  color: #2bb1ff;
+}
+
+.game-screen__score--orange {
+  color: #f58e39;
+}
+
+.game-screen__score-value {
+  min-width: 0.55em;
+}
+
+.game-screen__current-player {
+  position: absolute;
+  top: var(--game-label-top);
+  left: 50%;
+  width: auto;
+  min-width: 188px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transform: translateX(-50%);
+  color: #ffffff;
+  font-family: 'Red Rose', serif;
+  font-size: 26px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: 0;
+  pointer-events: none;
+}
+
+.game-screen__current-player-text {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.game-screen__current-player-marker {
+  width: 29px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2bb1ff;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.game-screen__current-player-marker.is-orange {
+  color: #f58e39;
+}
+
+.game-screen__current-player-marker svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.game-screen__exit-button {
+  position: absolute;
+  top: var(--game-exit-top);
+  left: var(--game-exit-left);
+  width: calc(100% * 206 / 1440);
+  height: calc(100% * 61 / 1024);
+  padding: 0;
+  border: 0;
+  background: none;
+  overflow: hidden;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.game-screen__exit-button-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: fill;
+  transition:
+    transform 150ms ease,
+    filter 150ms ease;
+}
+
+.game-screen__exit-button:hover .game-screen__exit-button-image,
+.game-screen__exit-button:focus-visible .game-screen__exit-button-image {
+  transform: scale(1.008);
+  filter: brightness(1.08) drop-shadow(0 0 8px rgba(255, 255, 255, 0.25));
+}
+
+.game-screen__exit-button:focus-visible {
+  outline: 2px solid #f0e5d9;
+  outline-offset: 2px;
+}
+
+.game-screen__exit-fallback {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid #2f2f2f;
+  background-color: #ececec;
+  color: #2f2f2f;
+  font-family: 'Almarai', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.game-screen__exit-fallback:focus-visible {
+  outline: 2px solid #2f2f2f;
+  outline-offset: 2px;
+}
+
+.game-screen__exit-modal {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: rgba(48, 49, 49, 0.64);
+  pointer-events: auto;
+}
+
+.game-screen__exit-modal[hidden] {
+  display: none;
+}
+
+.game-screen__exit-modal-panel {
+  width: min(889px, 100%);
+  min-height: 443px;
+  padding: 72px 40px 66px;
+  background-color: #ececed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 92px;
+}
+
+.game-screen__exit-modal-title {
+  width: min(459px, 100%);
+  min-height: 79px;
+  margin: 0;
+  color: #303131;
+  font-family: 'Red Rose', serif;
+  font-size: 32px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 40px;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.game-screen__exit-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.game-screen__modal-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: transform 140ms ease;
+}
+
+.game-screen__modal-button-image {
+  display: block;
+  width: auto;
+  height: 57px;
+  transition:
+    filter 150ms ease,
+    background-color 150ms ease;
+}
+
+.game-screen__modal-button--back .game-screen__modal-button-image {
+  width: 182px;
+}
+
+.game-screen__modal-button--exit {
+  background-color: rgba(134, 233, 214, 0.16);
+}
+
+.game-screen__modal-button--exit .game-screen__modal-button-image {
+  width: 148px;
+}
+
+.game-screen__modal-button:hover,
+.game-screen__modal-button:focus-visible {
+  transform: translateY(-1px);
+}
+
+.game-screen__modal-button--back:hover .game-screen__modal-button-image,
+.game-screen__modal-button--back:focus-visible .game-screen__modal-button-image {
+  filter: brightness(1.08);
+}
+
+.game-screen__modal-button--exit:hover,
+.game-screen__modal-button--exit:focus-visible {
+  background-color: rgba(102, 207, 188, 0.3);
+}
+
+.game-screen__modal-button--exit:hover .game-screen__modal-button-image,
+.game-screen__modal-button--exit:focus-visible .game-screen__modal-button-image {
+  filter: saturate(1.08) brightness(1.03);
+}
+
+.game-screen__modal-button:focus-visible {
+  outline: 2px solid #f0e5d9;
+  outline-offset: 4px;
+}
+
+@media (max-width: 1100px) {
+  .game-screen {
+    overflow-y: auto;
+  }
+
+  .game-screen__canvas {
+    min-height: 100%;
+    padding: 14px 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .game-screen__hud {
+    position: static;
+    inset: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-areas: 'score current exit';
+    align-items: center;
+    gap: 10px;
+    pointer-events: auto;
+  }
+
+  .game-screen__scoreboard {
+    grid-area: score;
+    position: static;
+    width: min(220px, 100%);
+    height: 44px;
+    padding: 0 10px;
+    gap: 8px;
+    font-size: 15px;
+  }
+
+  .game-screen__current-player {
+    grid-area: current;
+    position: static;
+    transform: none;
+    width: auto;
+    min-width: 188px;
+    height: 32px;
+    font-size: 26px;
+    justify-self: center;
+  }
+
+  .game-screen__current-player-marker {
+    width: 29px;
+    height: 24px;
+  }
+
+  .game-screen__exit-button {
+    grid-area: exit;
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 152px;
+    height: 44px;
+    justify-self: end;
+  }
+
+  .game-screen__board-area {
+    position: static;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: min(95vw, 680px);
+    margin: 0 auto 8px;
+  }
+
+  .game-screen--board-24 .game-screen__board-area,
+  .game-screen--board-36 .game-screen__board-area {
+    width: min(95vw, 760px);
+  }
+
+  .game-screen__board-grid {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 700px) {
+  .game-screen__canvas {
+    padding: 10px 8px 14px;
+    gap: 10px;
+  }
+
+  .game-screen__hud {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'current current'
+      'score exit';
+    row-gap: 6px;
+  }
+
+  .game-screen__scoreboard {
+    grid-area: score;
+    max-width: none;
+    height: 38px;
+    font-size: 13px;
+    padding: 0 8px;
+  }
+
+  .game-screen__current-player {
+    grid-area: current;
+    justify-self: center;
+    width: auto;
+    min-width: 156px;
+    height: 24px;
+    font-size: 20px;
+    gap: 8px;
+  }
+
+  .game-screen__current-player-marker {
+    width: 22px;
+    height: 18px;
+  }
+
+  .game-screen__exit-button {
+    grid-area: exit;
+    width: 128px;
+    height: 38px;
+  }
+
+  .game-screen__board-area,
+  .game-screen--board-24 .game-screen__board-area,
+  .game-screen--board-36 .game-screen__board-area {
+    width: min(96vw, 560px);
+  }
+
+  .game-screen__board-grid {
+    gap: 6px;
+  }
+
+  .game-screen__exit-modal {
+    padding: 10px;
+  }
+
+  .game-screen__exit-modal-panel {
+    min-height: 0;
+    padding: 26px 16px 22px;
+    gap: 26px;
+  }
+
+  .game-screen__exit-modal-title {
+    min-height: 0;
+    font-size: 26px;
+    line-height: 1.2;
+  }
+
+  .game-screen__exit-modal-actions {
+    gap: 14px;
+  }
+
+  .game-screen__modal-button--back .game-screen__modal-button-image {
+    width: 160px;
+    height: 51px;
+  }
+
+  .game-screen__modal-button--exit .game-screen__modal-button-image {
+    width: 132px;
+    height: 51px;
+  }
+}
+
+.game-screen--foods {
+  background-color: #ececec;
+  color: #303131;
+}
+
+.game-screen--foods .game-screen__canvas {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 24px 24px;
+  gap: 36px;
+}
+
+.game-screen--foods .game-screen__hud {
+  position: static;
+  inset: auto;
+  width: min(1220px, 100%);
+  display: block;
+  order: -1;
+  pointer-events: auto;
+}
+
+.game-screen--foods .game-screen__foods-topbar {
+  width: min(1219px, 100%);
+  height: 102px;
+  padding: 24px;
+  border-radius: 10px;
+  background-color: #f0e5d9;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: 'score current exit';
+  align-items: center;
+  column-gap: 24px;
+}
+
+.game-screen--foods .game-screen__scoreboard {
+  grid-area: score;
+  position: static;
+  width: auto;
+  min-width: 184px;
+  height: 54px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background-color: #fff9f2;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  color: #303131;
+  font-family: 'Red Rose', serif;
+  font-size: clamp(28px, 2.05vw, 42px);
+  font-weight: 700;
+  line-height: 1;
+  justify-self: start;
+  z-index: 2;
+}
+
+.game-screen--foods .game-screen__score {
+  gap: 4px;
+}
+
+.game-screen--foods .game-screen__score-icon {
+  width: 20px;
+  height: 24px;
+}
+
+.game-screen--foods .game-screen__score-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.game-screen--foods .game-screen__score--orange {
+  color: #ea6900;
+}
+
+.game-screen--foods .game-screen__score--blue {
+  color: #097fc5;
+}
+
+.game-screen--foods .game-screen__score-value {
+  min-width: 0.7em;
+  text-align: left;
+}
+
+.game-screen--foods .game-screen__current-player {
+  grid-area: current;
+  position: static;
+  transform: none;
+  width: auto;
+  min-width: 232px;
+  height: 46px;
+  justify-self: center;
+  gap: 10px;
+  color: #a45212;
+  font-family: 'Klee One', sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  pointer-events: none;
+}
+
+.game-screen--foods .game-screen__current-player-marker {
+  width: 41px;
+  height: 40px;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  gap: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #097fc5;
+}
+
+.game-screen--foods .game-screen__current-player-marker.is-orange {
+  color: #ea6900;
+}
+
+.game-screen--foods .game-screen__current-player-marker svg {
+  width: 25px;
+  height: 25px;
+  display: block;
+}
+
+.game-screen--foods .game-screen__exit-button {
+  grid-area: exit;
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 176px;
+  height: 49px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  cursor: pointer;
+  justify-self: end;
+  z-index: 2;
+}
+
+.game-screen--foods .game-screen__exit-button-image {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 160ms ease;
+}
+
+.game-screen--foods .game-screen__exit-button-image--foods-default {
+  opacity: 1;
+}
+
+.game-screen--foods .game-screen__exit-button-image--foods-hover {
+  opacity: 0;
+}
+
+.game-screen--foods .game-screen__exit-button:hover,
+.game-screen--foods .game-screen__exit-button:focus-visible {
+  background: none;
+  border: 0;
+}
+
+.game-screen--foods .game-screen__exit-button:hover .game-screen__exit-button-image,
+.game-screen--foods .game-screen__exit-button:focus-visible .game-screen__exit-button-image {
+  filter: none;
+  transform: none;
+}
+
+.game-screen--foods .game-screen__exit-button:hover .game-screen__exit-button-image--foods-default,
+.game-screen--foods .game-screen__exit-button:focus-visible .game-screen__exit-button-image--foods-default {
+  opacity: 0;
+}
+
+.game-screen--foods .game-screen__exit-button:hover .game-screen__exit-button-image--foods-hover,
+.game-screen--foods .game-screen__exit-button:focus-visible .game-screen__exit-button-image--foods-hover {
+  opacity: 1;
+}
+
+.game-screen--foods .game-screen__exit-button:focus-visible {
+  outline: 2px solid #f3832d;
+  outline-offset: 2px;
+}
+
+.game-screen--foods .game-screen__exit-modal {
+  background-color: rgba(48, 49, 49, 0.3);
+}
+
+.game-screen--foods .game-screen__exit-modal-panel--foods {
+  width: min(692px, 100%);
+  min-height: 387px;
+  padding: 58px 28px 28px;
+  border-radius: 30px;
+  background-color: #fff9f2;
+  gap: 78px;
+}
+
+.game-screen--foods .game-screen__exit-modal-title--foods {
+  width: min(376px, 100%);
+  min-height: 76px;
+  margin: 0;
+  color: #a45212;
+  font-family: 'Klee One', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 40px;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.game-screen--foods .game-screen__exit-modal-actions--foods {
+  gap: 36px;
+}
+
+.game-screen--foods .game-screen__modal-button--foods {
+  background: none;
+  position: relative;
+}
+
+.game-screen--foods .game-screen__modal-button--foods .game-screen__modal-button-image {
+  height: auto;
+}
+
+.game-screen--foods .game-screen__modal-button--foods .game-screen__modal-button-image--foods {
+  transition: opacity 150ms ease;
+}
+
+.game-screen--foods .game-screen__modal-button-image--foods-back {
+  width: 214px;
+}
+
+.game-screen--foods .game-screen__modal-button-image--foods-exit {
+  width: 144px;
+}
+
+.game-screen--foods .game-screen__modal-button-image--foods-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.game-screen--foods .game-screen__modal-button--foods.game-screen__modal-button--exit {
+  background: none;
+}
+
+.game-screen--foods .game-screen__modal-button--foods:hover,
+.game-screen--foods .game-screen__modal-button--foods:focus-visible {
+  transform: translateY(-1px);
+}
+
+.game-screen--foods .game-screen__modal-button--foods:hover .game-screen__modal-button-image--foods-default,
+.game-screen--foods .game-screen__modal-button--foods:focus-visible .game-screen__modal-button-image--foods-default {
+  opacity: 0;
+}
+
+.game-screen--foods .game-screen__modal-button--foods:hover .game-screen__modal-button-image--foods-hover,
+.game-screen--foods .game-screen__modal-button--foods:focus-visible .game-screen__modal-button-image--foods-hover {
+  opacity: 1;
+}
+
+.game-screen--foods .game-screen__modal-button--foods:focus-visible {
+  outline: 2px solid #f3832d;
+  outline-offset: 3px;
+}
+
+.game-screen--foods .game-screen__board-area {
+  position: static;
+  top: auto;
+  left: auto;
+  width: auto;
+  transform: none;
+  margin: 0;
+}
+
+.game-screen--foods .game-screen__board-grid {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(var(--game-board-columns), 122px);
+  gap: 8px;
+}
+
+.game-screen--foods.game-screen--board-24 .game-screen__board-grid,
+.game-screen--foods.game-screen--board-36 .game-screen__board-grid {
+  grid-template-columns: repeat(6, 96px);
+}
+
+.game-screen--foods .game-card__inner {
+  transition: transform 0.26s ease-in-out;
+}
+
+.game-screen--foods .game-card__face--front {
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.game-screen--foods .game-card__face--back {
+  background-color: #f4ece4;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.game-screen--foods .game-card.is-matched .game-card__face--back {
+  box-shadow: inset 0 0 0 2px rgba(243, 131, 45, 0.55);
+}
+
+@media (max-width: 1100px) {
+  .game-screen--foods {
+    overflow-y: auto;
+  }
+
+  .game-screen--foods .game-screen__canvas {
+    min-height: 100dvh;
+    padding: 10px 10px 16px;
+    gap: 18px;
+  }
+
+  .game-screen--foods .game-screen__hud {
+    width: min(980px, 100%);
+  }
+
+  .game-screen--foods .game-screen__foods-topbar {
+    min-height: 76px;
+    padding: 12px 14px;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: 'score current exit';
+    column-gap: 12px;
+  }
+
+  .game-screen--foods .game-screen__scoreboard {
+    height: 46px;
+    gap: 13px;
+    padding: 0 12px;
+    min-width: 160px;
+    font-size: clamp(26px, 3.3vw, 38px);
+  }
+
+  .game-screen--foods .game-screen__current-player {
+    grid-area: current;
+    position: static;
+    top: auto;
+    left: auto;
+    transform: none;
+    justify-self: center;
+    width: max-content;
+    max-width: 100%;
+    min-width: 0;
+    height: auto;
+    font-size: clamp(24px, 2.9vw, 34px);
+    gap: 10px;
+    z-index: auto;
+  }
+
+  .game-screen--foods .game-screen__exit-button {
+    grid-area: exit;
+    padding: 0;
+    width: 150px;
+    height: 42px;
+  }
+
+  .game-screen--foods .game-screen__exit-button-image {
+    width: 150px;
+    height: 42px;
+  }
+
+  .game-screen--foods .game-screen__board-grid {
+    grid-template-columns: repeat(var(--game-board-columns), 100px);
+    gap: 6px;
+  }
+
+  .game-screen--foods.game-screen--board-24 .game-screen__board-grid,
+  .game-screen--foods.game-screen--board-36 .game-screen__board-grid {
+    grid-template-columns: repeat(6, 76px);
+  }
+}
+
+@media (max-width: 700px) {
+  .game-screen--foods .game-screen__canvas {
+    padding: 10px 8px 14px;
+    gap: 14px;
+  }
+
+  .game-screen--foods .game-screen__foods-topbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'score exit'
+      'current current';
+    row-gap: 8px;
+    min-height: 0;
+    padding: 10px;
+  }
+
+  .game-screen--foods .game-screen__scoreboard {
+    grid-area: score;
+    justify-self: start;
+    height: 34px;
+    min-width: 122px;
+    padding: 0 8px;
+    gap: 8px;
+    font-size: 22px;
+  }
+
+  .game-screen--foods .game-screen__current-player {
+    grid-area: current;
+    position: static;
+    top: auto;
+    left: auto;
+    transform: none;
+    justify-self: center;
+    width: auto;
+    min-width: 0;
+    height: auto;
+    font-size: 22px;
+    gap: 8px;
+    z-index: auto;
+  }
+
+  .game-screen--foods .game-screen__exit-button {
+    grid-area: exit;
+    justify-self: end;
+    width: 122px;
+    height: 34px;
+    padding: 0;
+  }
+
+  .game-screen--foods .game-screen__exit-button-image {
+    width: 122px;
+    height: 34px;
+  }
+
+  .game-screen--foods.game-screen--board-16 .game-screen__board-grid {
+    grid-template-columns: repeat(4, 72px);
+    gap: 5px;
+  }
+
+  .game-screen--foods.game-screen--board-24 .game-screen__board-grid,
+  .game-screen--foods.game-screen--board-36 .game-screen__board-grid {
+    grid-template-columns: repeat(6, 54px);
+    gap: 4px;
+  }
+
+  .game-screen--foods .game-screen__exit-modal-panel--foods {
+    min-height: 0;
+    padding: 26px 16px 20px;
+    border-radius: 20px;
+    gap: 28px;
+  }
+
+  .game-screen--foods .game-screen__exit-modal-title--foods {
+    width: min(376px, 100%);
+    min-height: 0;
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  .game-screen--foods .game-screen__exit-modal-actions--foods {
+    gap: 12px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .game-screen--foods .game-screen__modal-button-image--foods-back {
+    width: 178px;
+  }
+
+  .game-screen--foods .game-screen__modal-button-image--foods-exit {
+    width: 122px;
+  }
+}

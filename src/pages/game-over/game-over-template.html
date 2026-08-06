@@ -1,0 +1,35 @@
+<main
+  class="game-over-screen {{THEME_CLASS_NAME}}"
+  data-game-over-screen
+  aria-labelledby="game-over-title"
+>
+  <section class="game-over-screen__intro">
+    <div class="game-over-screen__banner">
+      <h1 id="game-over-title" class="game-over-screen__title">Game Over</h1>
+    </div>
+    <h2 class="game-over-screen__subtitle">Final score</h2>
+    {{SCORE_SUMMARY_MARKUP}}
+  </section>
+
+  <section class="game-over-screen__winner-page" aria-live="polite">
+    {{CONFETTI_MARKUP}}
+
+    <div class="game-over-screen__winner-content">
+      {{WINNER_CONTENT_MARKUP}}
+
+      <button
+        type="button"
+        class="game-over-screen__back-home-button"
+        data-back-home-button
+        aria-label="Back to home"
+      >
+        <img
+          class="{{BACK_HOME_BUTTON_IMAGE_CLASS_NAME}}"
+          src="{{BACK_HOME_BUTTON_SRC}}"
+          alt=""
+          aria-hidden="true"
+        />
+      </button>
+    </div>
+  </section>
+</main>
