@@ -10,17 +10,17 @@ import {
   THEME_CHOICES,
 } from '../../app/game-settings';
 import { applyTemplateTokens, readTemplatePartial } from '../../app/template-utils';
-import boardSizeIcon from '../../../puplic/designs/theme_1/style.svg';
-import inactiveOptionIcon from '../../../puplic/designs/theme_1/fiber_manual_record.svg';
-import activeOptionIcon from '../../../puplic/designs/theme_1/mode_standby.svg';
-import gameThemeIcon from '../../../puplic/designs/theme_1/palette.svg';
-import playerIcon from '../../../puplic/designs/theme_1/chess_pawn.svg';
-import footerSeparatorActive from '../../../puplic/designs/theme_1/footer-separator-active.svg';
-import footerSeparatorLine from '../../../puplic/designs/theme_1/Line 6.svg';
-import selectedOptionLine from '../../../puplic/designs/theme_1/select-line.svg';
-import codeVibesPreviewImage from '../../../puplic/designs/theme_1/setting-picture.svg';
-import foodsPreviewImage from '../../../puplic/designs/theme-visiual-food.svg';
-import startButtonImage from '../../../puplic/designs/theme_1/small button.svg';
+import boardSizeIcon from '../../assets/designs/code-vibes/style.svg';
+import inactiveOptionIcon from '../../assets/designs/code-vibes/option-inactive.svg';
+import activeOptionIcon from '../../assets/designs/code-vibes/option-active.svg';
+import gameThemeIcon from '../../assets/designs/code-vibes/palette.svg';
+import playerIcon from '../../assets/designs/code-vibes/chess-pawn.svg';
+import footerSeparatorActive from '../../assets/designs/code-vibes/footer-separator-active.svg';
+import footerSeparatorLine from '../../assets/designs/code-vibes/footer-separator-line.svg';
+import selectedOptionLine from '../../assets/designs/code-vibes/select-line.svg';
+import codeVibesPreviewImage from '../../assets/designs/code-vibes/setting-picture.svg';
+import foodsPreviewImage from '../../assets/designs/theme-visual-food.svg';
+import startButtonImage from '../../assets/designs/code-vibes/start-button.svg';
 import settingsTemplateMarkup from './settings-template.html?raw';
 import settingsPartialsMarkup from './settings-partials.html?raw';
 

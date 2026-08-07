@@ -1,5 +1,5 @@
-import controllerIcon from '../../../puplic/designs/stadia_controller.svg';
-import playButtonIcon from '../../../puplic/designs/play-button.svg';
+import controllerIcon from '../../assets/designs/stadia-controller.svg';
+import playButtonIcon from '../../assets/designs/play-button.svg';
 import { applyTemplateTokens } from '../../app/template-utils';
 import homeTemplateMarkup from './home-template.html?raw';
 
